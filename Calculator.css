@@ -52,3 +52,7 @@
 			background: cyan;
 			color: black;
         }
+
+input[readonly] {
+  cursor: default;
+}

@@ -1,14 +1,16 @@
 function display(value){
-	calculator.screen.value+=value;
-	click=true;
-	if(i==1){
-		i=0;
+	if (calculator.screen.value.slice(-1) != ")") {
+		calculator.screen.value+=value;
+		click=true;
+		if(i==1){
+			i=0;
+		}
 	}
 }
 var click;
 
 function display1(value){
-	if(value=="-"){
+	if(value=="-" && calculator.screen.value[calculator.screen.value.length-1] != "-"){
 		calculator.screen.value+=value;
 		click = false;
 	}
@@ -26,10 +28,20 @@ function brackets(){
 		i = 1;
 	}
 	else if((i == 1 && !(y == "+" || y == "-" || y == "x" || y == "/" || y == "%" || y == "(")) ||
-	(i == 0 && !(y == "+" || y == "-" || y == "x" || y == "/" || y == "%" || y == "(" || x.length == 1)))
+	(i == 0 && !(y == "+" || y == "-" || y == "x" || y == "/" || y == "%" || y == "(" || x.length == 1 || y == ")")))
 	{
 		calculator.screen.value += ')';
 		i = 0;
+	}
+	else if (i == 0 && y == ")") {
+		let eqtn = calculator.screen.value;
+		
+		let openCnt = (eqtn.match(/\(/g)||[]).length;
+		let closeCnt = (eqtn.match(/\)/g)||[]).length;
+
+		if (closeCnt<openCnt) {
+			calculator.screen.value += ')';
+		}
 	}
 	click=true;
 }
